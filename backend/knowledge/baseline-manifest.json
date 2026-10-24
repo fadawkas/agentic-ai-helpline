@@ -1,0 +1,13 @@
+{
+  "baseline_id": "who-stress-management-2026-10",
+  "publisher": "World Health Organization",
+  "source_title": "Doing What Matters in Times of Stress: An Illustrated Guide",
+  "source_landing_page": "https://www.who.int/publications/i/item/9789240003927",
+  "download_url": "https://iris.who.int/server/api/core/bitstreams/65bb7c04-5180-4773-a0d8-0d5be2cc35a0/content",
+  "downloaded_at": "2026-10-23",
+  "source_language": "en",
+  "local_file": "WHO-Doing-What-Matters-in-Times-of-Stress.pdf",
+  "sha256": "5413685924bf3041a4b1fdd14bcad9a640dac2cf823c6e840ade5862400ef5c2",
+  "license": "CC BY-NC-SA 3.0 IGO",
+  "notice": "Baseline summaries in baseline.json are Indonesian paraphrases of the WHO guide. This source is non-commercial and share-alike licensed; confirm permitted use before commercial deployment."
+}

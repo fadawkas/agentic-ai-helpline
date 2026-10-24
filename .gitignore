@@ -1,0 +1,34 @@
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.Python
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+build/
+dist/
+*.egg-info/
+
+# Node.js and generated frontend output
+node_modules/
+*.tsbuildinfo
+
+# Local IDE, operating-system, and tooling files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+.opencode/node_modules/
+
+# Local project planning prompt; not part of the public project documentation
+/PLAN.md

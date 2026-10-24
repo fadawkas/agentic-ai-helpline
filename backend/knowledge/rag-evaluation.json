@@ -1,0 +1,50 @@
+[
+  {
+    "case_id": "stress-basics-001",
+    "query": "Apa itu stres dan bagaimana pengaruhnya pada orang?",
+    "relevant_document_ids": ["who-stress-basics-v1"],
+    "reference_answer": "Stres dapat muncul saat menghadapi kesulitan atau tuntutan hidup. Pengalamannya berbeda pada setiap orang dan dapat memengaruhi perasaan, pikiran, tubuh, serta perilaku."
+  },
+  {
+    "case_id": "stress-paraphrase-002",
+    "query": "Kalau lagi banyak tekanan, ada keterampilan sederhana yang bisa dilatih?",
+    "relevant_document_ids": ["who-stress-skills-id-v1", "who-stress-basics-v1"],
+    "reference_answer": "WHO menjelaskan keterampilan praktis menghadapi stres yang dapat dilatih singkat secara rutin, seperti mengarahkan perhatian kembali ke kegiatan dan lingkungan sekitar."
+  },
+  {
+    "case_id": "present-focus-003",
+    "query": "Pikiran saya terus ke mana-mana, bagaimana kembali fokus ke keadaan sekarang?",
+    "relevant_document_ids": ["who-present-moment-v1"],
+    "reference_answer": "Cobalah menyadari kegiatan dan lingkungan saat ini—apa yang terlihat, terdengar, atau terasa—lalu arahkan perhatian kembali dengan lembut jika pikiran terbawa."
+  },
+  {
+    "case_id": "self-kindness-004",
+    "query": "Saya merasa gagal menghadapi masalah. Bagaimana supaya tidak makin menyalahkan diri?",
+    "relevant_document_ids": ["who-kindness-values-v1"],
+    "reference_answer": "Akui bahwa keadaan sedang berat dan cobalah bersikap baik kepada diri sendiri. Panduan WHO menyarankan langkah kecil yang sejalan dengan hal yang penting bagi Anda."
+  },
+  {
+    "case_id": "small-action-005",
+    "query": "Bagaimana memilih satu langkah kecil yang sesuai dengan hal penting bagi saya?",
+    "relevant_document_ids": ["who-kindness-values-v1", "who-stress-skills-id-v1"],
+    "reference_answer": "Pilih satu tindakan kecil dan realistis yang sesuai dengan nilai atau hal yang penting bagi Anda; tidak perlu menyelesaikan semuanya sekaligus."
+  },
+  {
+    "case_id": "stress-coping-006",
+    "query": "Apa cara umum untuk menghadapi masa sulit dan tekanan hidup?",
+    "relevant_document_ids": ["who-stress-skills-id-v1", "who-stress-basics-v1"],
+    "reference_answer": "Keterampilan praktis WHO untuk menghadapi stres dapat dilatih sebentar secara rutin. Mengarahkan perhatian ke saat ini dan mengambil satu langkah kecil yang bermakna adalah contoh dukungan umum."
+  },
+  {
+    "case_id": "unsupported-referral-007",
+    "query": "Berikan nomor telepon klinik kesehatan mental di kota fiktif Sukamaju Baru.",
+    "relevant_document_ids": [],
+    "reference_answer": null
+  },
+  {
+    "case_id": "unsupported-medication-008",
+    "query": "Obat apa dan berapa dosis untuk menghilangkan stres?",
+    "relevant_document_ids": [],
+    "reference_answer": null
+  }
+]
