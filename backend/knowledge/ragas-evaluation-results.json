@@ -1,0 +1,242 @@
+{
+  "metadata": {
+    "framework": "RAGAS",
+    "ragas_version": "0.4.3",
+    "run_at_utc": "2026-10-24T12:05:09.854857+00:00",
+    "evaluation_file": "rag-evaluation.json",
+    "evaluation_file_sha256": "2d41da313eef740b96ca030c56bdd1ac79b0892028e87d52e31328022709ca83",
+    "corpus_file": "baseline.json",
+    "corpus_file_sha256": "f57e824f08bf7992b2404ed4b2a432695d3335286bf86d3e3097eab28333238d",
+    "corpus_document_ids": [
+      "who-kindness-values-v1",
+      "who-present-moment-v1",
+      "who-stress-basics-v1",
+      "who-stress-skills-id-v1"
+    ],
+    "retrieval_k": 4,
+    "embedding_model": "intfloat/multilingual-e5-large",
+    "reranker_model": "cohere/rerank-4-fast",
+    "answer_model": "deepseek/deepseek-v4.1-flash-1017",
+    "judge_model": "deepseek/deepseek-v4.1-flash-1017"
+  },
+  "case_count": 8,
+  "metrics": {
+    "context_precision": {
+      "mean": 0.9999999999486112,
+      "evaluated_cases": 6
+    },
+    "context_recall": {
+      "mean": 1.0,
+      "evaluated_cases": 6
+    },
+    "faithfulness": {
+      "mean": 0.8240740740740741,
+      "evaluated_cases": 6
+    },
+    "factual_correctness": {
+      "mean": 0.3333333333333333,
+      "evaluated_cases": 6
+    },
+    "no_answer_accuracy": {
+      "mean": 1.0,
+      "evaluated_cases": 2
+    }
+  },
+  "cases": [
+    {
+      "case_id": "stress-basics-001",
+      "user_input": "Apa itu stres dan bagaimana pengaruhnya pada orang?",
+      "relevant_document_ids": [
+        "who-stress-basics-v1"
+      ],
+      "retrieved_context_ids": [
+        "who-stress-basics-v1",
+        "who-stress-skills-id-v1",
+        "who-present-moment-v1",
+        "who-kindness-values-v1"
+      ],
+      "retrieved_contexts": [
+        "Stres dapat muncul ketika seseorang menghadapi kesulitan atau tuntutan hidup. Pengalaman stres berbeda pada setiap orang dan dapat memengaruhi perasaan, pikiran, tubuh, serta perilaku. WHO menyediakan panduan keterampilan praktis untuk membantu menghadapi stres; keterampilan dapat dilatih sebentar secara rutin dan disesuaikan dengan keadaan. Panduan tersebut tidak dimaksudkan untuk mendiagnosis atau menggantikan dukungan profesional. Bila stres berat, berlangsung lama, mengganggu fungsi sehari-hari, atau disertai kekhawatiran tentang keselamatan, mencari dukungan dari tenaga kesehatan atau orang tepercaya merupakan langkah yang wajar. Sumber: WHO, Doing What Matters in Times of Stress: An Illustrated Guide (2020), https://www.who.int/publications/i/item/9789240003927.",
+        "WHO menjelaskan keterampilan praktis untuk membantu menghadapi stres dan kesulitan. Latihan singkat dan rutin dapat membantu seseorang mengelola tekanan. Sadari dan beri nama perasaan tanpa menghakimi. Perhatikan pikiran yang muncul, lalu arahkan kembali perhatian pada kegiatan atau lingkungan saat ini. Bertindak sesuai nilai dan kebutuhan yang penting, satu langkah kecil pada satu waktu. Bersikap baik kepada diri sendiri ketika menghadapi masa sulit. Teknik ini merupakan dukungan mandiri umum, bukan pengganti konsultasi profesional atau pertolongan darurat. Jika tekanan terasa berat, berkepanjangan, mengganggu kegiatan sehari-hari, atau keselamatan terancam, hubungi orang tepercaya dan layanan kesehatan profesional. Materi sumber: Doing What Matters in Times of Stress: An Illustrated Guide, WHO, https://www.who.int/publications/i/item/9789240003927.",
+        "Saat pikiran terasa terseret oleh kekhawatiran, seseorang dapat berlatih mengarahkan perhatian kembali ke kegiatan yang sedang dilakukan dan lingkungan di sekitarnya. Sadari apa yang terlihat, terdengar, atau terasa tanpa perlu menilai pengalaman itu. Jika perhatian kembali terbawa pikiran, arahkan kembali dengan lembut. Latihan ini adalah keterampilan umum untuk menghadapi stres dan tidak menjamin hilangnya masalah atau menggantikan bantuan profesional. Sumber: WHO, Doing What Matters in Times of Stress: An Illustrated Guide (2020), https://www.who.int/publications/i/item/9789240003927.",
+        "Dalam menghadapi kesulitan, bersikap baik kepada diri sendiri berarti mengakui bahwa keadaan sedang berat dan memilih respons yang tidak menambah penderitaan. Seseorang dapat memikirkan hal yang penting baginya lalu memilih satu tindakan kecil yang sejalan dengan nilai tersebut. Perubahan kecil dan realistis dapat menjadi langkah awal. Ini merupakan panduan dukungan umum, bukan diagnosis atau terapi pengganti. Sumber: WHO, Doing What Matters in Times of Stress: An Illustrated Guide (2020), https://www.who.int/publications/i/item/9789240003927."
+      ],
+      "response": "Menurut sumber WHO, stres dapat muncul ketika seseorang menghadapi kesulitan atau tuntutan hidup, dan pengalaman stres berbeda pada setiap orang. Stres dapat memengaruhi perasaan, pikiran, tubuh, serta perilaku seseorang. Sumber juga menyatakan bahwa bila stres berat, berlangsung lama, mengganggu fungsi sehari-hari, atau disertai kekhawatiran tentang keselamatan, mencari dukungan tenaga kesehatan atau orang tepercaya adalah langkah yang wajar.",
+      "reference": "Stres dapat muncul saat menghadapi kesulitan atau tuntutan hidup. Pengalamannya berbeda pada setiap orang dan dapat memengaruhi perasaan, pikiran, tubuh, serta perilaku.",
+      "ragas_metrics": {
+        "context_precision": 0.9999999999,
+        "context_recall": 1.0,
+        "faithfulness": 1.0,
+        "factual_correctness": 0.5
+      }
+    },
+    {
+      "case_id": "stress-paraphrase-002",
+      "user_input": "Kalau lagi banyak tekanan, ada keterampilan sederhana yang bisa dilatih?",
+      "relevant_document_ids": [
+        "who-stress-skills-id-v1",
+        "who-stress-basics-v1"
+      ],
+      "retrieved_context_ids": [
+        "who-stress-skills-id-v1",
+        "who-stress-basics-v1",
+        "who-present-moment-v1",
+        "who-kindness-values-v1"
+      ],
+      "retrieved_contexts": [
+        "WHO menjelaskan keterampilan praktis untuk membantu menghadapi stres dan kesulitan. Latihan singkat dan rutin dapat membantu seseorang mengelola tekanan. Sadari dan beri nama perasaan tanpa menghakimi. Perhatikan pikiran yang muncul, lalu arahkan kembali perhatian pada kegiatan atau lingkungan saat ini. Bertindak sesuai nilai dan kebutuhan yang penting, satu langkah kecil pada satu waktu. Bersikap baik kepada diri sendiri ketika menghadapi masa sulit. Teknik ini merupakan dukungan mandiri umum, bukan pengganti konsultasi profesional atau pertolongan darurat. Jika tekanan terasa berat, berkepanjangan, mengganggu kegiatan sehari-hari, atau keselamatan terancam, hubungi orang tepercaya dan layanan kesehatan profesional. Materi sumber: Doing What Matters in Times of Stress: An Illustrated Guide, WHO, https://www.who.int/publications/i/item/9789240003927.",
+        "Stres dapat muncul ketika seseorang menghadapi kesulitan atau tuntutan hidup. Pengalaman stres berbeda pada setiap orang dan dapat memengaruhi perasaan, pikiran, tubuh, serta perilaku. WHO menyediakan panduan keterampilan praktis untuk membantu menghadapi stres; keterampilan dapat dilatih sebentar secara rutin dan disesuaikan dengan keadaan. Panduan tersebut tidak dimaksudkan untuk mendiagnosis atau menggantikan dukungan profesional. Bila stres berat, berlangsung lama, mengganggu fungsi sehari-hari, atau disertai kekhawatiran tentang keselamatan, mencari dukungan dari tenaga kesehatan atau orang tepercaya merupakan langkah yang wajar. Sumber: WHO, Doing What Matters in Times of Stress: An Illustrated Guide (2020), https://www.who.int/publications/i/item/9789240003927.",
+        "Saat pikiran terasa terseret oleh kekhawatiran, seseorang dapat berlatih mengarahkan perhatian kembali ke kegiatan yang sedang dilakukan dan lingkungan di sekitarnya. Sadari apa yang terlihat, terdengar, atau terasa tanpa perlu menilai pengalaman itu. Jika perhatian kembali terbawa pikiran, arahkan kembali dengan lembut. Latihan ini adalah keterampilan umum untuk menghadapi stres dan tidak menjamin hilangnya masalah atau menggantikan bantuan profesional. Sumber: WHO, Doing What Matters in Times of Stress: An Illustrated Guide (2020), https://www.who.int/publications/i/item/9789240003927.",
+        "Dalam menghadapi kesulitan, bersikap baik kepada diri sendiri berarti mengakui bahwa keadaan sedang berat dan memilih respons yang tidak menambah penderitaan. Seseorang dapat memikirkan hal yang penting baginya lalu memilih satu tindakan kecil yang sejalan dengan nilai tersebut. Perubahan kecil dan realistis dapat menjadi langkah awal. Ini merupakan panduan dukungan umum, bukan diagnosis atau terapi pengganti. Sumber: WHO, Doing What Matters in Times of Stress: An Illustrated Guide (2020), https://www.who.int/publications/i/item/9789240003927."
+      ],
+      "response": "Ada. WHO menjelaskan keterampilan praktis untuk membantu menghadapi stres dan kesulitan, dan latihan singkat serta rutin dapat membantu seseorang mengelola tekanan. Contohnya menyadari dan memberi nama perasaan tanpa menghakimi, mengarahkan kembali perhatian pada kegiatan atau lingkungan saat ini, serta bersikap baik kepada diri sendiri ketika menghadapi masa sulit.",
+      "reference": "WHO menjelaskan keterampilan praktis menghadapi stres yang dapat dilatih singkat secara rutin, seperti mengarahkan perhatian kembali ke kegiatan dan lingkungan sekitar.",
+      "ragas_metrics": {
+        "context_precision": 0.9999999999666667,
+        "context_recall": 1.0,
+        "faithfulness": 0.8333333333333334,
+        "factual_correctness": 0.5
+      }
+    },
+    {
+      "case_id": "present-focus-003",
+      "user_input": "Pikiran saya terus ke mana-mana, bagaimana kembali fokus ke keadaan sekarang?",
+      "relevant_document_ids": [
+        "who-present-moment-v1"
+      ],
+      "retrieved_context_ids": [
+        "who-present-moment-v1",
+        "who-stress-skills-id-v1",
+        "who-kindness-values-v1",
+        "who-stress-basics-v1"
+      ],
+      "retrieved_contexts": [
+        "Saat pikiran terasa terseret oleh kekhawatiran, seseorang dapat berlatih mengarahkan perhatian kembali ke kegiatan yang sedang dilakukan dan lingkungan di sekitarnya. Sadari apa yang terlihat, terdengar, atau terasa tanpa perlu menilai pengalaman itu. Jika perhatian kembali terbawa pikiran, arahkan kembali dengan lembut. Latihan ini adalah keterampilan umum untuk menghadapi stres dan tidak menjamin hilangnya masalah atau menggantikan bantuan profesional. Sumber: WHO, Doing What Matters in Times of Stress: An Illustrated Guide (2020), https://www.who.int/publications/i/item/9789240003927.",
+        "WHO menjelaskan keterampilan praktis untuk membantu menghadapi stres dan kesulitan. Latihan singkat dan rutin dapat membantu seseorang mengelola tekanan. Sadari dan beri nama perasaan tanpa menghakimi. Perhatikan pikiran yang muncul, lalu arahkan kembali perhatian pada kegiatan atau lingkungan saat ini. Bertindak sesuai nilai dan kebutuhan yang penting, satu langkah kecil pada satu waktu. Bersikap baik kepada diri sendiri ketika menghadapi masa sulit. Teknik ini merupakan dukungan mandiri umum, bukan pengganti konsultasi profesional atau pertolongan darurat. Jika tekanan terasa berat, berkepanjangan, mengganggu kegiatan sehari-hari, atau keselamatan terancam, hubungi orang tepercaya dan layanan kesehatan profesional. Materi sumber: Doing What Matters in Times of Stress: An Illustrated Guide, WHO, https://www.who.int/publications/i/item/9789240003927.",
+        "Dalam menghadapi kesulitan, bersikap baik kepada diri sendiri berarti mengakui bahwa keadaan sedang berat dan memilih respons yang tidak menambah penderitaan. Seseorang dapat memikirkan hal yang penting baginya lalu memilih satu tindakan kecil yang sejalan dengan nilai tersebut. Perubahan kecil dan realistis dapat menjadi langkah awal. Ini merupakan panduan dukungan umum, bukan diagnosis atau terapi pengganti. Sumber: WHO, Doing What Matters in Times of Stress: An Illustrated Guide (2020), https://www.who.int/publications/i/item/9789240003927.",
+        "Stres dapat muncul ketika seseorang menghadapi kesulitan atau tuntutan hidup. Pengalaman stres berbeda pada setiap orang dan dapat memengaruhi perasaan, pikiran, tubuh, serta perilaku. WHO menyediakan panduan keterampilan praktis untuk membantu menghadapi stres; keterampilan dapat dilatih sebentar secara rutin dan disesuaikan dengan keadaan. Panduan tersebut tidak dimaksudkan untuk mendiagnosis atau menggantikan dukungan profesional. Bila stres berat, berlangsung lama, mengganggu fungsi sehari-hari, atau disertai kekhawatiran tentang keselamatan, mencari dukungan dari tenaga kesehatan atau orang tepercaya merupakan langkah yang wajar. Sumber: WHO, Doing What Matters in Times of Stress: An Illustrated Guide (2020), https://www.who.int/publications/i/item/9789240003927."
+      ],
+      "response": "Saat pikiran terseret, arahkan perhatian kembali ke kegiatan yang sedang dilakukan dan lingkungan sekitar; sadari apa yang terlihat, terdengar, atau terasa tanpa menilai pengalaman itu. Jika perhatian terbawa lagi, arahkan kembali dengan lembut, dan Anda juga dapat memberi nama perasaan tanpa menghakimi. WHO menyebut ini keterampilan umum menghadapi stres, bukan pengganti bantuan profesional.",
+      "reference": "Cobalah menyadari kegiatan dan lingkungan saat ini—apa yang terlihat, terdengar, atau terasa—lalu arahkan perhatian kembali dengan lembut jika pikiran terbawa.",
+      "ragas_metrics": {
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0,
+        "faithfulness": 1.0,
+        "factual_correctness": 0.0
+      }
+    },
+    {
+      "case_id": "self-kindness-004",
+      "user_input": "Saya merasa gagal menghadapi masalah. Bagaimana supaya tidak makin menyalahkan diri?",
+      "relevant_document_ids": [
+        "who-kindness-values-v1"
+      ],
+      "retrieved_context_ids": [
+        "who-kindness-values-v1",
+        "who-stress-skills-id-v1",
+        "who-present-moment-v1",
+        "who-stress-basics-v1"
+      ],
+      "retrieved_contexts": [
+        "Dalam menghadapi kesulitan, bersikap baik kepada diri sendiri berarti mengakui bahwa keadaan sedang berat dan memilih respons yang tidak menambah penderitaan. Seseorang dapat memikirkan hal yang penting baginya lalu memilih satu tindakan kecil yang sejalan dengan nilai tersebut. Perubahan kecil dan realistis dapat menjadi langkah awal. Ini merupakan panduan dukungan umum, bukan diagnosis atau terapi pengganti. Sumber: WHO, Doing What Matters in Times of Stress: An Illustrated Guide (2020), https://www.who.int/publications/i/item/9789240003927.",
+        "WHO menjelaskan keterampilan praktis untuk membantu menghadapi stres dan kesulitan. Latihan singkat dan rutin dapat membantu seseorang mengelola tekanan. Sadari dan beri nama perasaan tanpa menghakimi. Perhatikan pikiran yang muncul, lalu arahkan kembali perhatian pada kegiatan atau lingkungan saat ini. Bertindak sesuai nilai dan kebutuhan yang penting, satu langkah kecil pada satu waktu. Bersikap baik kepada diri sendiri ketika menghadapi masa sulit. Teknik ini merupakan dukungan mandiri umum, bukan pengganti konsultasi profesional atau pertolongan darurat. Jika tekanan terasa berat, berkepanjangan, mengganggu kegiatan sehari-hari, atau keselamatan terancam, hubungi orang tepercaya dan layanan kesehatan profesional. Materi sumber: Doing What Matters in Times of Stress: An Illustrated Guide, WHO, https://www.who.int/publications/i/item/9789240003927.",
+        "Saat pikiran terasa terseret oleh kekhawatiran, seseorang dapat berlatih mengarahkan perhatian kembali ke kegiatan yang sedang dilakukan dan lingkungan di sekitarnya. Sadari apa yang terlihat, terdengar, atau terasa tanpa perlu menilai pengalaman itu. Jika perhatian kembali terbawa pikiran, arahkan kembali dengan lembut. Latihan ini adalah keterampilan umum untuk menghadapi stres dan tidak menjamin hilangnya masalah atau menggantikan bantuan profesional. Sumber: WHO, Doing What Matters in Times of Stress: An Illustrated Guide (2020), https://www.who.int/publications/i/item/9789240003927.",
+        "Stres dapat muncul ketika seseorang menghadapi kesulitan atau tuntutan hidup. Pengalaman stres berbeda pada setiap orang dan dapat memengaruhi perasaan, pikiran, tubuh, serta perilaku. WHO menyediakan panduan keterampilan praktis untuk membantu menghadapi stres; keterampilan dapat dilatih sebentar secara rutin dan disesuaikan dengan keadaan. Panduan tersebut tidak dimaksudkan untuk mendiagnosis atau menggantikan dukungan profesional. Bila stres berat, berlangsung lama, mengganggu fungsi sehari-hari, atau disertai kekhawatiran tentang keselamatan, mencari dukungan dari tenaga kesehatan atau orang tepercaya merupakan langkah yang wajar. Sumber: WHO, Doing What Matters in Times of Stress: An Illustrated Guide (2020), https://www.who.int/publications/i/item/9789240003927."
+      ],
+      "response": "Saat merasa gagal, WHO menyarankan mengakui bahwa keadaan sedang berat dan memilih respons yang tidak menambah penderitaan, termasuk bersikap baik kepada diri sendiri. Sadari dan beri nama perasaan tanpa menghakimi, lalu arahkan kembali perhatian pada kegiatan atau lingkungan saat ini dengan lembut. Pilih satu tindakan kecil yang sejalan dengan hal penting bagi Anda, karena perubahan kecil dan realistis dapat menjadi langkah awal.",
+      "reference": "Akui bahwa keadaan sedang berat dan cobalah bersikap baik kepada diri sendiri. Panduan WHO menyarankan langkah kecil yang sejalan dengan hal yang penting bagi Anda.",
+      "ragas_metrics": {
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0,
+        "faithfulness": 0.1111111111111111,
+        "factual_correctness": 0.0
+      }
+    },
+    {
+      "case_id": "small-action-005",
+      "user_input": "Bagaimana memilih satu langkah kecil yang sesuai dengan hal penting bagi saya?",
+      "relevant_document_ids": [
+        "who-kindness-values-v1",
+        "who-stress-skills-id-v1"
+      ],
+      "retrieved_context_ids": [
+        "who-kindness-values-v1",
+        "who-stress-skills-id-v1",
+        "who-stress-basics-v1",
+        "who-present-moment-v1"
+      ],
+      "retrieved_contexts": [
+        "Dalam menghadapi kesulitan, bersikap baik kepada diri sendiri berarti mengakui bahwa keadaan sedang berat dan memilih respons yang tidak menambah penderitaan. Seseorang dapat memikirkan hal yang penting baginya lalu memilih satu tindakan kecil yang sejalan dengan nilai tersebut. Perubahan kecil dan realistis dapat menjadi langkah awal. Ini merupakan panduan dukungan umum, bukan diagnosis atau terapi pengganti. Sumber: WHO, Doing What Matters in Times of Stress: An Illustrated Guide (2020), https://www.who.int/publications/i/item/9789240003927.",
+        "WHO menjelaskan keterampilan praktis untuk membantu menghadapi stres dan kesulitan. Latihan singkat dan rutin dapat membantu seseorang mengelola tekanan. Sadari dan beri nama perasaan tanpa menghakimi. Perhatikan pikiran yang muncul, lalu arahkan kembali perhatian pada kegiatan atau lingkungan saat ini. Bertindak sesuai nilai dan kebutuhan yang penting, satu langkah kecil pada satu waktu. Bersikap baik kepada diri sendiri ketika menghadapi masa sulit. Teknik ini merupakan dukungan mandiri umum, bukan pengganti konsultasi profesional atau pertolongan darurat. Jika tekanan terasa berat, berkepanjangan, mengganggu kegiatan sehari-hari, atau keselamatan terancam, hubungi orang tepercaya dan layanan kesehatan profesional. Materi sumber: Doing What Matters in Times of Stress: An Illustrated Guide, WHO, https://www.who.int/publications/i/item/9789240003927.",
+        "Stres dapat muncul ketika seseorang menghadapi kesulitan atau tuntutan hidup. Pengalaman stres berbeda pada setiap orang dan dapat memengaruhi perasaan, pikiran, tubuh, serta perilaku. WHO menyediakan panduan keterampilan praktis untuk membantu menghadapi stres; keterampilan dapat dilatih sebentar secara rutin dan disesuaikan dengan keadaan. Panduan tersebut tidak dimaksudkan untuk mendiagnosis atau menggantikan dukungan profesional. Bila stres berat, berlangsung lama, mengganggu fungsi sehari-hari, atau disertai kekhawatiran tentang keselamatan, mencari dukungan dari tenaga kesehatan atau orang tepercaya merupakan langkah yang wajar. Sumber: WHO, Doing What Matters in Times of Stress: An Illustrated Guide (2020), https://www.who.int/publications/i/item/9789240003927.",
+        "Saat pikiran terasa terseret oleh kekhawatiran, seseorang dapat berlatih mengarahkan perhatian kembali ke kegiatan yang sedang dilakukan dan lingkungan di sekitarnya. Sadari apa yang terlihat, terdengar, atau terasa tanpa perlu menilai pengalaman itu. Jika perhatian kembali terbawa pikiran, arahkan kembali dengan lembut. Latihan ini adalah keterampilan umum untuk menghadapi stres dan tidak menjamin hilangnya masalah atau menggantikan bantuan profesional. Sumber: WHO, Doing What Matters in Times of Stress: An Illustrated Guide (2020), https://www.who.int/publications/i/item/9789240003927."
+      ],
+      "response": "Pikirkan hal yang penting bagi Anda, lalu pilih satu tindakan kecil yang sejalan dengan nilai tersebut; perubahan kecil dan realistis dapat menjadi langkah awal. Bertindaklah sesuai nilai dan kebutuhan yang penting, satu langkah kecil pada satu waktu.",
+      "reference": "Pilih satu tindakan kecil dan realistis yang sesuai dengan nilai atau hal yang penting bagi Anda; tidak perlu menyelesaikan semuanya sekaligus.",
+      "ragas_metrics": {
+        "context_precision": 0.99999999995,
+        "context_recall": 1.0,
+        "faithfulness": 1.0,
+        "factual_correctness": 1.0
+      }
+    },
+    {
+      "case_id": "stress-coping-006",
+      "user_input": "Apa cara umum untuk menghadapi masa sulit dan tekanan hidup?",
+      "relevant_document_ids": [
+        "who-stress-skills-id-v1",
+        "who-stress-basics-v1"
+      ],
+      "retrieved_context_ids": [
+        "who-stress-skills-id-v1",
+        "who-kindness-values-v1",
+        "who-present-moment-v1",
+        "who-stress-basics-v1"
+      ],
+      "retrieved_contexts": [
+        "WHO menjelaskan keterampilan praktis untuk membantu menghadapi stres dan kesulitan. Latihan singkat dan rutin dapat membantu seseorang mengelola tekanan. Sadari dan beri nama perasaan tanpa menghakimi. Perhatikan pikiran yang muncul, lalu arahkan kembali perhatian pada kegiatan atau lingkungan saat ini. Bertindak sesuai nilai dan kebutuhan yang penting, satu langkah kecil pada satu waktu. Bersikap baik kepada diri sendiri ketika menghadapi masa sulit. Teknik ini merupakan dukungan mandiri umum, bukan pengganti konsultasi profesional atau pertolongan darurat. Jika tekanan terasa berat, berkepanjangan, mengganggu kegiatan sehari-hari, atau keselamatan terancam, hubungi orang tepercaya dan layanan kesehatan profesional. Materi sumber: Doing What Matters in Times of Stress: An Illustrated Guide, WHO, https://www.who.int/publications/i/item/9789240003927.",
+        "Dalam menghadapi kesulitan, bersikap baik kepada diri sendiri berarti mengakui bahwa keadaan sedang berat dan memilih respons yang tidak menambah penderitaan. Seseorang dapat memikirkan hal yang penting baginya lalu memilih satu tindakan kecil yang sejalan dengan nilai tersebut. Perubahan kecil dan realistis dapat menjadi langkah awal. Ini merupakan panduan dukungan umum, bukan diagnosis atau terapi pengganti. Sumber: WHO, Doing What Matters in Times of Stress: An Illustrated Guide (2020), https://www.who.int/publications/i/item/9789240003927.",
+        "Saat pikiran terasa terseret oleh kekhawatiran, seseorang dapat berlatih mengarahkan perhatian kembali ke kegiatan yang sedang dilakukan dan lingkungan di sekitarnya. Sadari apa yang terlihat, terdengar, atau terasa tanpa perlu menilai pengalaman itu. Jika perhatian kembali terbawa pikiran, arahkan kembali dengan lembut. Latihan ini adalah keterampilan umum untuk menghadapi stres dan tidak menjamin hilangnya masalah atau menggantikan bantuan profesional. Sumber: WHO, Doing What Matters in Times of Stress: An Illustrated Guide (2020), https://www.who.int/publications/i/item/9789240003927.",
+        "Stres dapat muncul ketika seseorang menghadapi kesulitan atau tuntutan hidup. Pengalaman stres berbeda pada setiap orang dan dapat memengaruhi perasaan, pikiran, tubuh, serta perilaku. WHO menyediakan panduan keterampilan praktis untuk membantu menghadapi stres; keterampilan dapat dilatih sebentar secara rutin dan disesuaikan dengan keadaan. Panduan tersebut tidak dimaksudkan untuk mendiagnosis atau menggantikan dukungan profesional. Bila stres berat, berlangsung lama, mengganggu fungsi sehari-hari, atau disertai kekhawatiran tentang keselamatan, mencari dukungan dari tenaga kesehatan atau orang tepercaya merupakan langkah yang wajar. Sumber: WHO, Doing What Matters in Times of Stress: An Illustrated Guide (2020), https://www.who.int/publications/i/item/9789240003927."
+      ],
+      "response": "Menurut WHO, keterampilan praktis untuk menghadapi stres dan kesulitan mencakup latihan singkat yang rutin, menyadari dan memberi nama perasaan tanpa menghakimi, serta mengarahkan kembali perhatian pada kegiatan atau lingkungan saat ini. Seseorang juga dapat bertindak sesuai nilai dan kebutuhan penting dengan satu langkah kecil pada satu waktu, serta bersikap baik kepada diri sendiri saat menghadapi masa sulit. Jika tekanan terasa berat, berkepanjangan, mengganggu kegiatan sehari-hari, atau keselamatan terancam, sumber menyarankan menghubungi orang tepercaya dan layanan kesehatan profesional.",
+      "reference": "Keterampilan praktis WHO untuk menghadapi stres dapat dilatih sebentar secara rutin. Mengarahkan perhatian ke saat ini dan mengambil satu langkah kecil yang bermakna adalah contoh dukungan umum.",
+      "ragas_metrics": {
+        "context_precision": 0.999999999975,
+        "context_recall": 1.0,
+        "faithfulness": 1.0,
+        "factual_correctness": 0.0
+      }
+    },
+    {
+      "case_id": "unsupported-referral-007",
+      "user_input": "Berikan nomor telepon klinik kesehatan mental di kota fiktif Sukamaju Baru.",
+      "relevant_document_ids": [],
+      "retrieved_context_ids": [],
+      "retrieved_contexts": [],
+      "response": "Saya belum menemukan sumber terverifikasi yang cukup untuk menjawab pertanyaan ini.",
+      "reference": null,
+      "ragas_metrics": {
+        "context_precision": null,
+        "context_recall": null,
+        "faithfulness": null,
+        "factual_correctness": null
+      }
+    },
+    {
+      "case_id": "unsupported-medication-008",
+      "user_input": "Obat apa dan berapa dosis untuk menghilangkan stres?",
+      "relevant_document_ids": [],
+      "retrieved_context_ids": [],
+      "retrieved_contexts": [],
+      "response": "Saya belum menemukan sumber terverifikasi yang cukup untuk menjawab pertanyaan ini.",
+      "reference": null,
+      "ragas_metrics": {
+        "context_precision": null,
+        "context_recall": null,
+        "faithfulness": null,
+        "factual_correctness": null
+      }
+    }
+  ]
+}

@@ -42,7 +42,7 @@ External AI services are optional/configured through environment variables. See 
    cp .env.example .env
    ```
 
-3. Set unique values for `POSTGRES_PASSWORD`, `ASTERISK_SIP_PASSWORD`, and `ASTERISK_ARI_PASSWORD` in `.env`. For the admin dashboard, also set `ADMIN_PASSWORD` and a long random `ADMIN_SESSION_SECRET`. Add provider API keys only if you intend to use those integrations. Never commit `.env`.
+3. Set unique values for `POSTGRES_PASSWORD`, `ASTERISK_SIP_PASSWORD`, and `ASTERISK_ARI_PASSWORD` in `.env`. For the admin dashboard, also set `ADMIN_PASSWORD` and a long random `ADMIN_SESSION_SECRET`. Set `OPENROUTER_API_KEY` to enable RAG indexing and retrieval. Add the Deepgram and Fish Audio keys only if you intend to enable the live voice agent. Never commit `.env`.
 4. Start the services:
 
    ```bash
@@ -52,6 +52,47 @@ External AI services are optional/configured through environment variables. See 
 The dashboard is available at <http://localhost:5173>. The backend readiness endpoint is <http://localhost:8000/api/health/ready>. Check services and logs with `docker compose ps` and `docker compose logs -f`.
 
 Stop the services with `docker compose down`. Persistent database and service data is stored in Docker named volumes; `docker compose down -v` also deletes that data.
+
+## Start the RAG knowledge base
+
+RAG needs a valid `OPENROUTER_API_KEY` in `.env` for embeddings, source validation, and reranking. Start the services with `docker compose up --build`; when the key is configured, the backend initializes Qdrant and automatically validates and indexes the bundled Indonesian baseline. Without the key, the rest of the app can start, but knowledge indexing and retrieval are unavailable.
+
+To manage additional documents, set `ADMIN_USERNAME`, `ADMIN_PASSWORD`, and `ADMIN_SESSION_SECRET` in `.env`, start the dashboard, and sign in at <http://localhost:5173>. Upload reviewed source material with its publisher, official source URL, and verification date. Only documents that pass the configured official-source validation are indexed. See the [RAG guide](docs/rag-knowledge-base.md) for supported formats and document requirements.
+
+### Evaluate retrieval
+
+With the services running and `OPENROUTER_API_KEY` configured, run the included labeled evaluation set:
+
+```bash
+docker compose exec backend python -m app.rag.evaluate --file /app/knowledge/rag-evaluation.json --k 4
+```
+
+The custom evaluator reports retrieval ranking metrics and, by default, generates grounded answers and sends them with retrieved passages to an OpenRouter model judge. Use `--retrieval-only` to skip answer generation and judging (embeddings and reranking are still used). These provider calls may incur charges. The bundled dataset is small and provisional; its scores are not a benchmark.
+
+To run RAGAS against a temporary Qdrant collection populated only from the checked-in baseline fixtures (not user uploads), use the optional evaluation service:
+
+```bash
+docker compose --profile evaluation run --rm ragas-evaluator \
+  python -m app.rag.evaluate_ragas \
+  --file /app/knowledge/rag-evaluation.json \
+  --output /app/knowledge/ragas-evaluation-results.json
+```
+
+The RAGAS evaluator requires `OPENROUTER_API_KEY`, creates and removes its own Qdrant collection, and records dataset/corpus hashes and model versions in its report. It makes embedding, reranking, answer-generation, and judge requests to OpenRouter; these may incur charges. It uses only the synthetic evaluation questions and checked-in baseline content, not saved caller data.
+
+### Latest RAGAS smoke results
+
+RAGAS **0.4.3**, evaluated **2026-10-24**, `k=4`, eight cases (six answerable, two unanswerable):
+
+| Metric | Result |
+| --- | ---: |
+| Context precision | 1.000 (6 cases) |
+| Context recall | 1.000 (6 cases) |
+| Faithfulness | 0.824 (6 cases) |
+| Factual correctness | 0.333 (6 cases) |
+| No-answer accuracy (project metric) | 1.000 (2 cases) |
+
+The [full RAGAS report](backend/knowledge/ragas-evaluation-results.json) includes retrieved baseline passages, answers, per-case scores, corpus and dataset hashes, and model metadata. No-answer accuracy is a project-specific check, not a RAGAS metric. These are LLM-judged smoke-test results on a small provisional set, not a quality benchmark. The low factual-correctness score should be reviewed against the reference answers; have a human review the labels and judgments, then expand separate development and held-out datasets before using scores to claim quality. The earlier [custom evaluator report](backend/knowledge/rag-evaluation-results.json) is retained for comparison; it used the live corpus and is not directly comparable to the isolated RAGAS run.
 
 ## Test and build
 
@@ -80,9 +121,6 @@ Call extension `7001` for Asterisk's direct echo diagnostic, or `7000` for the a
 - [Voice pipeline](docs/voice-pipeline.md)
 - [Safety and Jev routing](docs/safety-jev.md)
 - [RAG knowledge base and evaluation](docs/rag-knowledge-base.md)
-- [Voice pipeline plan](docs/phase3-plan.md)
-
-The retrieval evaluation data is provisional and is not a quality benchmark; evaluation results require human review and a held-out dataset.
 
 ## Contributing
 

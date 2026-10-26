@@ -15,3 +15,7 @@ COPY knowledge ./knowledge
 FROM base AS development
 RUN pip install --no-cache-dir "uvicorn[standard]" watchfiles '.[test]'
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+FROM base AS evaluation
+RUN pip install --no-cache-dir '.[evaluation]'
+CMD ["python", "-m", "app.rag.evaluate_ragas"]

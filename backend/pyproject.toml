@@ -31,3 +31,10 @@ include = ["app*"]
 
 [project.optional-dependencies]
 test = ["pytest>=8,<9", "pytest-asyncio>=0.24,<2"]
+evaluation = [
+  "ragas==0.4.3",
+  "langchain<1",
+  "langchain-community<0.4",
+  "langchain-core<1",
+  "langchain-openai<1",
+]

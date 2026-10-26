@@ -48,7 +48,11 @@ Chunking preserves page, heading/section, paragraph, and table boundaries where 
 
 ## Operations
 
-For optional manual ingestion of a reviewed JSON file, place it in `backend/knowledge/`, then run:
+Set `OPENROUTER_API_KEY` in `.env` before starting the stack. At backend startup, the app initializes Qdrant, validates and seeds the bundled baseline, and loads the PostgreSQL BM25 index. If the key is absent, the API can start but RAG features are unavailable. Embedding, validation, and reranking requests use OpenRouter.
+
+For dashboard-managed uploads, configure `ADMIN_USERNAME`, `ADMIN_PASSWORD`, and `ADMIN_SESSION_SECRET`, then sign in to the frontend. Required source metadata includes publisher, official source URL, and verification date. Only documents that pass validation are indexed. Supported formats, extraction limits, and validation behavior are described above.
+
+For optional CLI ingestion, place a reviewed JSON array in `backend/knowledge/` and run:
 
 ```bash
 docker compose exec backend python -m app.rag.ingest --file /app/knowledge/reviewed.json
@@ -64,15 +68,28 @@ Retrieved passages are evidence only, never trusted instructions. Safety policie
 
 ## Retrieval evaluation
 
-`backend/knowledge/rag-evaluation.json` is a small provisional labeled set, including paraphrases and no-answer cases. Its labels are derived from the baseline records and must be reviewed before treating scores as a benchmark. Run the retrieval evaluator through Compose:
+`backend/knowledge/rag-evaluation.json` is a small provisional labeled set, including paraphrases and no-answer cases. With the stack running and `OPENROUTER_API_KEY` configured, run the evaluator through Compose:
 
 ```bash
 docker compose exec backend python -m app.rag.evaluate --file /app/knowledge/rag-evaluation.json --k 4
 ```
 
-The report includes document-level Precision@k, Recall@k, F1@k, Hit Rate@k, MRR@k, nDCG@k, no-answer accuracy, and LLM-as-a-judge means for context relevance, faithfulness, answer correctness, and appropriate abstention. Correctness is scored only for cases with a reference answer. Duplicate chunks from the same document count once; Precision@k divides by k. The run generates an answer from retrieved context, then independently judges it against retrieved passages and optional reference answers. Judge scores are model assessments, not ground truth.
+This custom evaluator searches the normal application corpus, so uploaded active documents can affect its results. To save its JSON output, add `--output /app/knowledge/rag-evaluation-results.json`. The historical custom report is [`backend/knowledge/rag-evaluation-results.json`](../backend/knowledge/rag-evaluation-results.json).
 
-Labels and references are provisional examples derived from the baseline, not a benchmark. Review them independently and expand development and held-out sets before tuning thresholds or claiming product quality. Judge evaluation sends synthetic evaluation questions and retrieved passages to OpenRouter; never point it at saved caller transcripts.
+For a repeatable RAGAS run isolated from dashboard uploads, use the optional evaluation profile:
+
+```bash
+docker compose --profile evaluation run --rm ragas-evaluator \
+  python -m app.rag.evaluate_ragas \
+  --file /app/knowledge/rag-evaluation.json \
+  --output /app/knowledge/ragas-evaluation-results.json
+```
+
+This builds a temporary Qdrant collection from `backend/knowledge/baseline.json`, applies the normal retrieval pipeline, evaluates only those retrieved passages and generated answers, then deletes the temporary collection. The report records the RAGAS version, dataset and corpus SHA-256 hashes, model IDs, timestamp, per-case retrieved contexts, scores, and counts of cases evaluated by each metric. The checked-in [RAGAS report](../backend/knowledge/ragas-evaluation-results.json) and summary are linked in the [README](../README.md#latest-ragas-smoke-results).
+
+RAGAS reports context precision, context recall, faithfulness, and factual correctness. Cases without a reference answer or retrieved context are excluded from inapplicable metrics and represented as `null`; each summary metric includes its eligible case count. The report also includes project-specific no-answer accuracy. The earlier custom report's metrics use different definitions and a live corpus, so they are not directly comparable.
+
+Labels and references are provisional examples derived from the baseline, not a benchmark. The RAGAS report's LLM scores are not ground truth; this smoke run does not provide independently reviewed development or held-out evaluation. Human-review the data and judgments, then expand development and held-out sets before tuning thresholds or claiming product quality. Evaluation sends synthetic questions, baseline passages, and generated answers to OpenRouter and may incur charges; never point it at saved caller transcripts.
 
 ## Verification
 

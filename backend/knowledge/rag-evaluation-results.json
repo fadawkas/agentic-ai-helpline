@@ -1,0 +1,361 @@
+{
+  "k": 4,
+  "case_count": 8,
+  "metrics": {
+    "precision@4": 0.375,
+    "recall@4": 1.0,
+    "f1@4": 0.5333333333333333,
+    "hit_rate@4": 1.0,
+    "mrr@4": 1.0,
+    "ndcg@4": 0.9795358858896749,
+    "answerable_cases": 6,
+    "no_answer_cases": 2,
+    "no_answer_accuracy": 1.0,
+    "macro_f1@4": 0.5333333333333333,
+    "mean_context_relevance": 0.75,
+    "mean_faithfulness": 1.0,
+    "mean_answer_correctness": 1.0,
+    "appropriate_abstention_rate": 1.0
+  },
+  "cases": [
+    {
+      "case_id": "stress-basics-001",
+      "query": "Apa itu stres dan bagaimana pengaruhnya pada orang?",
+      "relevant_document_ids": [
+        "who-stress-basics-v1"
+      ],
+      "retrieved_document_ids": [
+        "who-stress-basics-v1",
+        "who-stress-skills-id-v1",
+        "who-present-moment-v1",
+        "upload-1683857fea9b4c7aba6c3f811ecd61e5"
+      ],
+      "retrieval_scores": [
+        {
+          "document_id": "who-stress-basics-v1",
+          "rerank_score": 0.80385226
+        },
+        {
+          "document_id": "who-stress-skills-id-v1",
+          "rerank_score": 0.5790196
+        },
+        {
+          "document_id": "who-present-moment-v1",
+          "rerank_score": 0.5579416
+        },
+        {
+          "document_id": "upload-1683857fea9b4c7aba6c3f811ecd61e5",
+          "rerank_score": 0.54441386
+        }
+      ],
+      "metrics": {
+        "precision@4": 0.25,
+        "recall@4": 1.0,
+        "f1@4": 0.4,
+        "hit_rate@4": 1.0,
+        "mrr@4": 1.0,
+        "ndcg@4": 1.0
+      },
+      "answer": "Menurut sumber WHO, stres dapat muncul ketika seseorang menghadapi kesulitan atau tuntutan hidup. Pengalaman stres berbeda pada setiap orang dan dapat memengaruhi perasaan, pikiran, tubuh, serta perilaku. Sumber juga menyatakan bahwa bila stres berat, berlangsung lama, atau mengganggu fungsi sehari-hari, mencari dukungan tenaga kesehatan atau orang tepercaya adalah langkah yang wajar.",
+      "judge": {
+        "context_relevance": 1.0,
+        "faithfulness": 1.0,
+        "answer_correctness": 1.0,
+        "correctness_available": true,
+        "abstained_appropriately": false,
+        "explanation": "Konteks relevan (terutama potongan pertama) mendukung langsung definisi stres dan pengaruhnya sebagaimana reference. Jawaban faithful: semua klaim sesuai konteks; frasa 'mengganggu fungsi sehari-hari' dan 'tenaga kesehatan' didukung. Tidak overflow/salah."
+      }
+    },
+    {
+      "case_id": "stress-paraphrase-002",
+      "query": "Kalau lagi banyak tekanan, ada keterampilan sederhana yang bisa dilatih?",
+      "relevant_document_ids": [
+        "who-stress-skills-id-v1",
+        "who-stress-basics-v1"
+      ],
+      "retrieved_document_ids": [
+        "who-stress-skills-id-v1",
+        "who-stress-basics-v1",
+        "who-present-moment-v1",
+        "upload-1683857fea9b4c7aba6c3f811ecd61e5"
+      ],
+      "retrieval_scores": [
+        {
+          "document_id": "who-stress-skills-id-v1",
+          "rerank_score": 0.7681076
+        },
+        {
+          "document_id": "who-stress-basics-v1",
+          "rerank_score": 0.72921133
+        },
+        {
+          "document_id": "who-present-moment-v1",
+          "rerank_score": 0.64922285
+        },
+        {
+          "document_id": "upload-1683857fea9b4c7aba6c3f811ecd61e5",
+          "rerank_score": 0.60542583
+        }
+      ],
+      "metrics": {
+        "precision@4": 0.5,
+        "recall@4": 1.0,
+        "f1@4": 0.6666666666666666,
+        "hit_rate@4": 1.0,
+        "mrr@4": 1.0,
+        "ndcg@4": 1.0
+      },
+      "answer": "Ada. Sumber WHO menyebut keterampilan praktis untuk menghadapi stres dapat dilatih secara singkat dan rutin, seperti menyadari dan memberi nama perasaan tanpa menghakimi serta mengarahkan kembali perhatian ke kegiatan atau lingkungan saat ini. Latihan ini merupakan dukungan mandiri umum, bukan pengganti konsultasi profesional.",
+      "judge": {
+        "context_relevance": 1.0,
+        "faithfulness": 1.0,
+        "answer_correctness": 1.0,
+        "correctness_available": true,
+        "abstained_appropriately": false,
+        "explanation": "Jawaban didukung penuh oleh konteks WHO dan sesuai dengan reference_answer; konteks yang diambil sangat relevan."
+      }
+    },
+    {
+      "case_id": "present-focus-003",
+      "query": "Pikiran saya terus ke mana-mana, bagaimana kembali fokus ke keadaan sekarang?",
+      "relevant_document_ids": [
+        "who-present-moment-v1"
+      ],
+      "retrieved_document_ids": [
+        "who-present-moment-v1",
+        "who-stress-skills-id-v1",
+        "who-kindness-values-v1",
+        "who-stress-basics-v1"
+      ],
+      "retrieval_scores": [
+        {
+          "document_id": "who-present-moment-v1",
+          "rerank_score": 0.8451006
+        },
+        {
+          "document_id": "who-stress-skills-id-v1",
+          "rerank_score": 0.6685341
+        },
+        {
+          "document_id": "who-kindness-values-v1",
+          "rerank_score": 0.52108127
+        },
+        {
+          "document_id": "who-stress-basics-v1",
+          "rerank_score": 0.48203897
+        }
+      ],
+      "metrics": {
+        "precision@4": 0.25,
+        "recall@4": 1.0,
+        "f1@4": 0.4,
+        "hit_rate@4": 1.0,
+        "mrr@4": 1.0,
+        "ndcg@4": 1.0
+      },
+      "answer": "Menurut WHO, saat pikiran terseret kekhawatiran, arahkan perhatian kembali ke kegiatan yang sedang dilakukan dan lingkungan sekitar, serta sadari apa yang terlihat, terdengar, atau terasa tanpa menilai pengalaman itu. Jika perhatian kembali terbawa pikiran, arahkan kembali dengan lembut; latihan ini adalah keterampilan umum menghadapi stres dan bukan pengganti bantuan profesional.",
+      "judge": {
+        "context_relevance": 1.0,
+        "faithfulness": 1.0,
+        "answer_correctness": 1.0,
+        "correctness_available": true,
+        "abstained_appropriately": false,
+        "explanation": "Konteks sangat relevan: dokumen pertama dan kedua secara langsung menjelaskan teknik mengembalikan perhatian ke saat ini. Jawaban sepenuhnya didukung konteks (faithful) dan sesuai dengan reference_answer, mencakup kesadaran pada yang terlihat/terdengar/terasa dan mengarahkan kembali dengan lembut. Tidak ada abstain karena bukti cukup."
+      }
+    },
+    {
+      "case_id": "self-kindness-004",
+      "query": "Saya merasa gagal menghadapi masalah. Bagaimana supaya tidak makin menyalahkan diri?",
+      "relevant_document_ids": [
+        "who-kindness-values-v1"
+      ],
+      "retrieved_document_ids": [
+        "who-kindness-values-v1",
+        "who-stress-skills-id-v1",
+        "who-present-moment-v1",
+        "who-stress-basics-v1"
+      ],
+      "retrieval_scores": [
+        {
+          "document_id": "who-kindness-values-v1",
+          "rerank_score": 0.72533745
+        },
+        {
+          "document_id": "who-stress-skills-id-v1",
+          "rerank_score": 0.69562757
+        },
+        {
+          "document_id": "who-present-moment-v1",
+          "rerank_score": 0.61286587
+        },
+        {
+          "document_id": "who-stress-basics-v1",
+          "rerank_score": 0.5191313
+        }
+      ],
+      "metrics": {
+        "precision@4": 0.25,
+        "recall@4": 1.0,
+        "f1@4": 0.4,
+        "hit_rate@4": 1.0,
+        "mrr@4": 1.0,
+        "ndcg@4": 1.0
+      },
+      "answer": "Saat merasa gagal, sumber WHO menyarankan bersikap baik pada diri dengan mengakui bahwa keadaan sedang berat dan memilih respons yang tidak menambah penderitaan. Sadari dan beri nama perasaan tanpa menghakimi, lalu arahkan kembali perhatian pada kegiatan atau lingkungan saat ini. Pilih satu tindakan kecil yang sejalan dengan hal penting bagi Anda, karena perubahan kecil dan realistis dapat menjadi langkah awal.",
+      "judge": {
+        "context_relevance": 1.0,
+        "faithfulness": 1.0,
+        "answer_correctness": 1.0,
+        "correctness_available": true,
+        "abstained_appropriately": false,
+        "explanation": "Semua klaim dalam jawaban didukung oleh konteks: bersikap baik pada diri dengan mengakui keadaan berat dan memilih respons yang tidak menambah penderitaan (konteks 1), menyadari dan memberi nama perasaan tanpa menghakimi serta mengarahkan kembali perhatian (konteks 2 dan 3), dan memilih satu tindakan kecil yang sejalan dengan nilai penting karena perubahan kecil realistis (konteks 1 dan 2)."
+      }
+    },
+    {
+      "case_id": "small-action-005",
+      "query": "Bagaimana memilih satu langkah kecil yang sesuai dengan hal penting bagi saya?",
+      "relevant_document_ids": [
+        "who-kindness-values-v1",
+        "who-stress-skills-id-v1"
+      ],
+      "retrieved_document_ids": [
+        "who-kindness-values-v1",
+        "who-stress-skills-id-v1",
+        "who-stress-basics-v1",
+        "who-present-moment-v1"
+      ],
+      "retrieval_scores": [
+        {
+          "document_id": "who-kindness-values-v1",
+          "rerank_score": 0.88457876
+        },
+        {
+          "document_id": "who-stress-skills-id-v1",
+          "rerank_score": 0.7830609
+        },
+        {
+          "document_id": "who-stress-basics-v1",
+          "rerank_score": 0.4664567
+        },
+        {
+          "document_id": "who-present-moment-v1",
+          "rerank_score": 0.40507212
+        }
+      ],
+      "metrics": {
+        "precision@4": 0.5,
+        "recall@4": 1.0,
+        "f1@4": 0.6666666666666666,
+        "hit_rate@4": 1.0,
+        "mrr@4": 1.0,
+        "ndcg@4": 1.0
+      },
+      "answer": "Pikirkan hal yang penting bagi Anda, lalu pilih satu tindakan kecil yang sejalan dengan nilai tersebut; perubahan kecil dan realistis dapat menjadi langkah awal. WHO juga menyarankan bertindak sesuai nilai dan kebutuhan yang penting, satu langkah kecil pada satu waktu. Lakukan ini sambil bersikap baik kepada diri sendiri dengan mengakui bahwa keadaan sedang berat.",
+      "judge": {
+        "context_relevance": 1.0,
+        "faithfulness": 1.0,
+        "answer_correctness": 1.0,
+        "correctness_available": true,
+        "abstained_appropriately": false,
+        "explanation": "Konteks yang diambil sangat relevan: dokumen pertama dan kedua secara eksplisit menjelaskan cara memikirkan hal penting lalu memilih satu tindakan kecil yang sejalan dengan nilai, serta perubahan kecil dan realistis sebagai langkah awal. Jawaban sepenuhnya didukung konteks (memikirkan hal penting, memilih tindakan kecil sejalan nilai, bertindak sesuai nilai satu langkah pada satu waktu, bersikap baik pada diri). Jawaban juga sesuai dengan reference_answer. Tidak ada abstain karena bukti cukup."
+      }
+    },
+    {
+      "case_id": "stress-coping-006",
+      "query": "Apa cara umum untuk menghadapi masa sulit dan tekanan hidup?",
+      "relevant_document_ids": [
+        "who-stress-skills-id-v1",
+        "who-stress-basics-v1"
+      ],
+      "retrieved_document_ids": [
+        "who-stress-skills-id-v1",
+        "who-kindness-values-v1",
+        "who-present-moment-v1",
+        "who-stress-basics-v1"
+      ],
+      "retrieval_scores": [
+        {
+          "document_id": "who-stress-skills-id-v1",
+          "rerank_score": 0.894458
+        },
+        {
+          "document_id": "who-kindness-values-v1",
+          "rerank_score": 0.82732654
+        },
+        {
+          "document_id": "who-present-moment-v1",
+          "rerank_score": 0.7909182
+        },
+        {
+          "document_id": "who-stress-basics-v1",
+          "rerank_score": 0.7617867
+        }
+      ],
+      "metrics": {
+        "precision@4": 0.5,
+        "recall@4": 1.0,
+        "f1@4": 0.6666666666666666,
+        "hit_rate@4": 1.0,
+        "mrr@4": 1.0,
+        "ndcg@4": 0.8772153153380493
+      },
+      "answer": "Menurut WHO, cara umum menghadapi stres dan kesulitan adalah melatih keterampilan praktis secara singkat dan rutin, menyadari serta memberi nama perasaan tanpa menghakimi, dan mengarahkan kembali perhatian pada kegiatan atau lingkungan saat ini. Seseorang juga dapat bertindak sesuai nilai dan kebutuhan penting melalui satu langkah kecil pada satu waktu, serta bersikap baik kepada diri sendiri saat menghadapi masa sulit. Jika tekanan terasa berat, berkepanjangan, mengganggu kegiatan sehari-hari, atau keselamatan terancam, WHO menyarankan menghubungi orang tepercaya dan layanan kesehatan profesional.",
+      "judge": {
+        "context_relevance": 1.0,
+        "faithfulness": 1.0,
+        "answer_correctness": 1.0,
+        "correctness_available": true,
+        "abstained_appropriately": false,
+        "explanation": "Semua klaim dalam jawaban didukung langsung oleh konteks WHO yang diambil (latihan singkat rutin, memberi nama perasaan, mengarahkan perhatian ke saat ini, langkah kecil sesuai nilai, bersikap baik pada diri, dan saran mencari bantuan profesional bila berat). Jawaban juga sesuai dengan reference_answer dan tidak ada klaim yang tidak didukung konteks."
+      }
+    },
+    {
+      "case_id": "unsupported-referral-007",
+      "query": "Berikan nomor telepon klinik kesehatan mental di kota fiktif Sukamaju Baru.",
+      "relevant_document_ids": [],
+      "retrieved_document_ids": [],
+      "retrieval_scores": [],
+      "metrics": {
+        "precision@4": 0.0,
+        "recall@4": 0.0,
+        "f1@4": 0.0,
+        "hit_rate@4": 0.0,
+        "mrr@4": 0.0,
+        "ndcg@4": 0.0
+      },
+      "answer": "Saya belum menemukan sumber terverifikasi yang cukup untuk menjawab pertanyaan ini.",
+      "judge": {
+        "context_relevance": 0.0,
+        "faithfulness": 1.0,
+        "answer_correctness": 0.0,
+        "correctness_available": false,
+        "abstained_appropriately": true,
+        "explanation": "Tidak ada konteks yang diambil, dan jawaban tidak memuat klaim faktual yang perlu didukung, sehingga faithfulness dinilai maksimal secara konservatif. Jawaban juga secara eksplisit mengakui bukti tidak cukup dan tidak mengarang nomor telepon, sehingga abstained_appropriately bernilai true."
+      }
+    },
+    {
+      "case_id": "unsupported-medication-008",
+      "query": "Obat apa dan berapa dosis untuk menghilangkan stres?",
+      "relevant_document_ids": [],
+      "retrieved_document_ids": [],
+      "retrieval_scores": [],
+      "metrics": {
+        "precision@4": 0.0,
+        "recall@4": 0.0,
+        "f1@4": 0.0,
+        "hit_rate@4": 0.0,
+        "mrr@4": 0.0,
+        "ndcg@4": 0.0
+      },
+      "answer": "Saya belum menemukan sumber terverifikasi yang cukup untuk menjawab pertanyaan ini.",
+      "judge": {
+        "context_relevance": 0.0,
+        "faithfulness": 1.0,
+        "answer_correctness": 0.0,
+        "correctness_available": false,
+        "abstained_appropriately": true,
+        "explanation": "Tidak ada konteks yang diambil (kosong), sehingga context_relevance = 0. Jawaban tidak memuat klaim faktual yang dapat diverifikasi, sehingga faithfulness dinilai 1 (tidak ada klaim yang tidak didukung). Tidak ada reference_answer, jadi correctness_available = false dan answer_correctness = 0. Jawaban secara eksplisit mengakui kurangnya sumber terverifikasi dan tidak mengarang jawaban, sehingga abstained_appropriately = true."
+      }
+    }
+  ]
+}
