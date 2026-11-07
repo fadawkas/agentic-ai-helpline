@@ -22,10 +22,11 @@ async def readiness(request: Request, response: Response) -> dict[str, object]:
     except Exception:
         checks["qdrant"] = "unavailable"
     checks["asterisk_ari"] = (
-        "ok" if request.app.state.ari_events.is_connected else "unavailable"
+        "disabled" if request.app.state.ari_events is None
+        else "ok" if request.app.state.ari_events.is_connected else "unavailable"
     )
 
-    ready = all(status == "ok" for status in checks.values())
+    ready = all(status in {"ok", "disabled"} for status in checks.values())
     if not ready:
         response.status_code = 503
     return {"status": "ok" if ready else "unavailable", "dependencies": checks}

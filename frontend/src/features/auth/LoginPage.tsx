@@ -35,6 +35,6 @@ export function LoginPage({ onLogin, notice }: LoginPageProps) {
       {error && <Notice tone="error">{error}</Notice>}
       <button type="submit" className="primary-button min-h-11 text-sm" disabled={submitting}>{submitting ? "Memeriksa…" : "Masuk ke ruang kerja"}<span aria-hidden="true"> →</span></button>
     </form>
-    <p className="text-xs leading-6 text-stone-500">Akses khusus administrator. Pengguna berinteraksi dengan layanan melalui telepon.</p>
+    <p className="text-xs leading-6 text-stone-500">Akses khusus administrator. Untuk berbicara dengan Mara, pilih Mulai percakapan.</p>
   </section>;
 }

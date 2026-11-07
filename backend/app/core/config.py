@@ -12,9 +12,10 @@ class Settings(BaseSettings):
     postgres_password: SecretStr
     postgres_database: str = "voice_support"
     qdrant_url: str = "http://qdrant:6333"
+    telephony_enabled: bool = False
     asterisk_ari_url: str = "http://asterisk:8088/ari"
-    asterisk_ari_username: str
-    asterisk_ari_password: SecretStr
+    asterisk_ari_username: str = "voice_support"
+    asterisk_ari_password: SecretStr = SecretStr("")
     asterisk_ari_app: str = "voice-support"
     asterisk_ai_extension: str = "7000"
     asterisk_media_websocket_client: str = "voice_support_media"
@@ -54,6 +55,10 @@ class Settings(BaseSettings):
     knowledge_max_upload_bytes: int = Field(default=20_000_000, ge=1_000_000)
 
     model_config = SettingsConfigDict(case_sensitive=False)
+
+    def validate_telephony(self) -> None:
+        if not self.asterisk_ari_username.strip() or not self.asterisk_ari_password.get_secret_value().strip():
+            raise ValueError("Telephony requires ASTERISK_ARI_USERNAME and ASTERISK_ARI_PASSWORD.")
 
     def validate_voice_agent(self) -> None:
         required_secrets = {

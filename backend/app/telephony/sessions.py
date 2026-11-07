@@ -50,6 +50,12 @@ class CallSession:
         self.state = transition_call_state(self.state, target)
 
 
+class CallControl(Protocol):
+    async def begin_ending(self, session: CallSession) -> bool: ...
+
+    async def end_call(self, session: CallSession, *, hangup_caller: bool) -> None: ...
+
+
 class CallSessionManager:
     def __init__(self, ari: AriCallControl):
         self._ari = ari

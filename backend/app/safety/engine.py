@@ -1,3 +1,4 @@
+import re
 from enum import StrEnum
 
 from pydantic import BaseModel, ConfigDict
@@ -133,7 +134,6 @@ _SAFE_CONFIRMATION_PHRASES = (
 _EXPLICIT_END_PHRASES = (
     "akhiri panggilan",
     "akhiri saja",
-    "tolong akhiri",
     "akhiri panggilan",
     "akhiri telepon",
     "tutup panggilan",
@@ -179,11 +179,37 @@ def caller_reports_safe(text: str) -> bool:
     return any(phrase in normalized for phrase in _SAFE_CONFIRMATION_PHRASES)
 
 
+_END_ACTION = r"(?:mengakhiri|akhiri|menutup|tutup|menyudahi|sudahi|menghentikan|hentikan|berhenti|stop|end|hang\s+up)"
+_NEGATED_END_REQUEST = re.compile(
+    rf"\b(?:jangan|tidak|tak|belum|nggak|gak|enggak|ga|don't|do\s+not|not|never)\b"
+    rf"(?:\s+\w+){{0,4}}\s+{_END_ACTION}\b"
+)
+_CONVERSATION_END_REQUEST = re.compile(
+    r"(?:^|[.!?,;]\s*|\b(?:tolong|silakan)\s+|"
+    r"\b(?:saya|aku)\s+(?:ingin|mau|minta|pengen)\s+(?:untuk\s+)?|"
+    r"\b(?:bisa|boleh)(?:kah)?\s+(?:kita|saya)\s+)"
+    rf"{_END_ACTION}\s+(?:(?:saja|dulu|aja|sekarang)\s+)?"
+    r"(?:panggilan|telepon|percakapan|obrolan|sesi)\b"
+)
+_ENGLISH_CONVERSATION_END_REQUEST = re.compile(
+    r"(?:^|\bplease\s+|\bi\s+(?:want|would\s+like)\s+to\s+)"
+    r"(?:end|stop|finish)\s+(?:the|this|our)\s+(?:call|conversation|chat|session)\b"
+)
+
+
 def caller_explicitly_requests_end(text: str) -> bool:
-    normalized = " ".join(text.casefold().split())
-    if any(phrase in normalized for phrase in _NEGATED_END_PHRASES):
+    normalized = " ".join(text.casefold().replace("’", "'").split())
+    if (
+        any(phrase in normalized for phrase in _NEGATED_END_PHRASES)
+        or _NEGATED_END_REQUEST.search(normalized)
+    ):
         return False
-    return any(phrase in normalized for phrase in _EXPLICIT_END_PHRASES)
+    return bool(
+        any(phrase in normalized for phrase in _EXPLICIT_END_PHRASES)
+        or _CONVERSATION_END_REQUEST.search(normalized)
+        or _ENGLISH_CONVERSATION_END_REQUEST.search(normalized)
+        or re.fullmatch(r"(?:tolong\s+)?(?:akhiri|sudahi)(?:\s+(?:saja|sekarang))?[.!?]*", normalized)
+    )
 
 
 def advance_confirmation_state(

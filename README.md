@@ -42,7 +42,7 @@ External AI services are optional/configured through environment variables. See 
    cp .env.example .env
    ```
 
-3. Set unique values for `POSTGRES_PASSWORD`, `ASTERISK_SIP_PASSWORD`, and `ASTERISK_ARI_PASSWORD` in `.env`. For the admin dashboard, also set `ADMIN_PASSWORD` and a long random `ADMIN_SESSION_SECRET`. Set `OPENROUTER_API_KEY` to enable RAG indexing and retrieval. Add the Deepgram and Fish Audio keys only if you intend to enable the live voice agent. Never commit `.env`.
+3. Set a unique `POSTGRES_PASSWORD` in `.env`. SIP/ARI passwords are required only if you enable optional telephony. For the admin dashboard, also set `ADMIN_PASSWORD` and a long random `ADMIN_SESSION_SECRET`. Set `OPENROUTER_API_KEY` to enable RAG indexing and retrieval. Add the Deepgram and Fish Audio keys only if you intend to enable the live voice agent. Never commit `.env`.
 4. Start the services:
 
    ```bash
@@ -52,6 +52,14 @@ External AI services are optional/configured through environment variables. See 
 The dashboard is available at <http://localhost:5173>. The backend readiness endpoint is <http://localhost:8000/api/health/ready>. Check services and logs with `docker compose ps` and `docker compose logs -f`.
 
 Stop the services with `docker compose down`. Persistent database and service data is stored in Docker named volumes; `docker compose down -v` also deletes that data.
+
+## Browser voice demo (no login or SIP)
+
+Open <http://localhost:5173/demo> or use **Mulai percakapan** in the dashboard header. Click **Hubungkan dengan AI**, allow microphone access, and speak in Indonesian. **Akhiri percakapan** disconnects and releases the microphone.
+
+The page connects to `/api/demo/voice` over WebSocket and reuses the existing STT → agent/knowledge base → TTS pipeline without creating an Asterisk channel or SIP call. Enable `VOICE_AGENT_ENABLED=true` and configure `DEEPGRAM_API_KEY`, `OPENROUTER_API_KEY`, `FISH_AUDIO_API_KEY`, and `FISH_REFERENCE_ID` in `.env`; the knowledge base must be initialized. Restart the backend after configuration changes. By default `TELEPHONY_ENABLED=false`, and the browser-only stack does not start or require Asterisk. Set `TELEPHONY_ENABLED=true` in `.env`, configure `ASTERISK_SIP_PASSWORD` and `ASTERISK_ARI_PASSWORD`, and run `docker compose --profile telephony up --build` to enable SIP calling. When telephony is enabled, backend readiness requires ARI to connect. To switch back, set `TELEPHONY_ENABLED=false`, run `docker compose --profile telephony stop asterisk`, and recreate the backend with `docker compose up -d --build`.
+
+Microphone access requires **HTTPS or localhost**; a plain HTTP LAN address will not work. The Vite proxy supports WebSocket upgrades; production reverse proxies must forward `/api/demo/voice` upgrades and preserve the public Host header. Audio uses mono PCM16 at 16 kHz. The demo is public, limited to five minutes per session and three concurrent sessions and six new sessions per rolling minute per backend process, and rejects cross-origin browser connections. These limits are shared by all users on that process, reset on restart, and multiply across workers. If playback falls more than two seconds behind, the client ends the session with a visible error instead of silently skipping speech. These basic limits are not abuse prevention: add proxy-level rate limiting and usage monitoring before exposing it broadly. Voice/AI provider usage may incur charges.
 
 ## Start the RAG knowledge base
 

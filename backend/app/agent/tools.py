@@ -16,7 +16,7 @@ from app.safety.engine import (
     SafetyState,
     caller_explicitly_requests_end,
 )
-from app.telephony.sessions import CallSession, CallSessionManager
+from app.telephony.sessions import CallControl, CallSession
 
 logger = logging.getLogger(__name__)
 
@@ -98,7 +98,7 @@ class CallControlTools:
         self,
         *,
         session: CallSession,
-        sessions: CallSessionManager,
+        sessions: CallControl,
         tts: Any,
         playback: PlaybackController,
     ) -> None:

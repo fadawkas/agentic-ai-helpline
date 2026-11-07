@@ -186,6 +186,9 @@ body { background: #f2f5f3; }
 .page-shell { width: min(100% - 3rem, 88rem); }
 .topbar { height: 4.75rem; border-color: #dce5e2; }
 .topbar .environment { color: #516a67; font-size: .78rem; }
+.topbar .demo-link { margin-left: auto; padding: .6rem; color: #244d48; font-size: .8rem; text-decoration: underline; text-underline-offset: .2em; }
+.demo-link:focus-visible { outline: 2px solid #4f8076; outline-offset: 2px; }
+.topbar:has(.demo-link) { flex-wrap: wrap; gap: .5rem; height: auto; min-height: 4.75rem; padding-block: .5rem; }
 .topbar > a { color: #173739; }
 .topbar > a span:last-child span { color: #55736c; }
 .brand-mark { display: flex; width: 2.25rem; height: 2.25rem; align-items: center; justify-content: center; gap: 2px; border-radius: .5rem; background: #1d4d49; }

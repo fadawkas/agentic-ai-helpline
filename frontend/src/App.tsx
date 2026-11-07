@@ -89,7 +89,7 @@ export default function App() {
   };
 
   return <main className={`page-shell min-h-screen ${username ? "admin-shell" : ""}`}>
-    <header className="topbar"><Brand />{username ? <span className="environment"><i /> Ruang admin</span> : <span className="environment"><i /> Manajemen pengetahuan</span>}</header>
+    <header className="topbar"><Brand /><a className="demo-link" href="/demo">Mulai percakapan ↗</a>{username ? <span className="environment"><i /> Ruang admin</span> : <span className="environment"><i /> Manajemen pengetahuan</span>}</header>
     {isChecking ? <div className="mx-auto mt-20 max-w-md text-center text-sm text-stone-600" role="status">Memeriksa sesi admin…</div>
       : username ? <>
         {logoutError && <div className="mx-auto mt-4 max-w-5xl"><Notice tone="error">{logoutError}</Notice></div>}

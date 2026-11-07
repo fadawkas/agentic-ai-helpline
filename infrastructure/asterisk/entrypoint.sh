@@ -1,6 +1,9 @@
 #!/bin/sh
 set -eu
 
+: "${ASTERISK_SIP_PASSWORD:?Set ASTERISK_SIP_PASSWORD before starting telephony}"
+: "${ASTERISK_ARI_PASSWORD:?Set ASTERISK_ARI_PASSWORD before starting telephony}"
+
 asterisk_conf=/etc/asterisk
 
 cat > "$asterisk_conf/pjsip.conf" <<EOF

@@ -15,6 +15,9 @@ async def asterisk_media(
     session_id: str = Query(min_length=32, max_length=32),
 ) -> None:
     sessions = websocket.app.state.call_sessions
+    if sessions is None:
+        await websocket.close(code=1008)
+        return
     session = await sessions.claim_media_websocket(session_id)
     if session is None:
         await websocket.close(code=1008)

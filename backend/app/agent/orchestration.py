@@ -140,14 +140,14 @@ class AgentPolicyProcessor(FrameProcessor):
                     self._safety_state = self._safety_tracker.record_user_safe_report()
                     self._session.safety_state = self._safety_state
 
-                    if self._session.safety_confirmation_state in {
-                        SafetyConfirmationState.CALLER_REPORTS_SAFE,
-                        SafetyConfirmationState.CALLER_DECLINES,
-                    }:
-                        # Honor the caller's original end request after the one-step
-                        # confirmation. This path is Python-controlled, not model-gated.
-                        await self._call_tools.finish_after_confirmation()
-                        return
+                if self._session.safety_confirmation_state in {
+                    SafetyConfirmationState.CALLER_REPORTS_SAFE,
+                    SafetyConfirmationState.CALLER_DECLINES,
+                }:
+                    # Honor the caller's original end request after the one-step
+                    # confirmation. This path is Python-controlled, not model-gated.
+                    await self._call_tools.finish_after_confirmation()
+                    return
 
                 decision = await self._jev.route(
                     context,

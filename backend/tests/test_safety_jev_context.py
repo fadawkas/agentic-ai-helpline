@@ -1,5 +1,7 @@
+import asyncio
 import json
 from types import SimpleNamespace
+from unittest.mock import AsyncMock
 
 import pytest
 
@@ -144,6 +146,80 @@ def test_same_turn_retry_cannot_resolve_safety_confirmation() -> None:
 )
 def test_negated_end_request_does_not_count_as_caller_declining(text) -> None:
     assert not caller_explicitly_requests_end(text)
+
+
+@pytest.mark.parametrize("text", [
+    "Saya ingin mengakhiri percakapan ini.",
+    "Aku mau mengakhiri obrolan sekarang.",
+    "Tolong tutup sesi ini.",
+    "Bisa kita akhiri percakapan ini?",
+    "Sudahi dulu obrolan kita.",
+    "Please end this conversation.",
+    "I would like to stop our chat.",
+])
+def test_explicit_conversation_end_request_is_recognized(text) -> None:
+    assert caller_explicitly_requests_end(text)
+
+
+@pytest.mark.parametrize("text", [
+    "Saya tidak ingin mengakhiri percakapan ini.",
+    "Aku nggak mau mengakhiri obrolan ini.",
+    "Jangan tutup sesi ini.",
+    "Don’t end this conversation.",
+    "I do not want to stop our chat.",
+    "Bagaimana cara mengakhiri percakapan?",
+    "Saya ingin mengakhiri hidup.",
+    "Tolong akhiri hidup saya.",
+    "Saya ingin bicara tentang percakapan tadi.",
+])
+def test_negated_or_unrelated_end_language_does_not_authorize_hangup(text) -> None:
+    assert not caller_explicitly_requests_end(text)
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("text,should_end", [
+    ("Saya aman sekarang", True),
+    ("Saya ingin mengakhiri percakapan ini.", True),
+    ("Jangan akhiri panggilan, saya ingin bicara.", False),
+    ("Saya tidak tahu", False),
+])
+async def test_policy_finishes_confirmed_end_without_another_model_tool_call(text, should_end) -> None:
+    from app.api.demo import BrowserCallControl, WebSocketState
+    from app.agent.orchestration import AgentPolicyProcessor
+    from app.agent.state import CallState
+    from app.agent.tools import CallControlTools
+    from app.telephony.sessions import CallSession
+    from pipecat.frames.frames import LLMContextFrame
+    from pipecat.processors.frame_processor import FrameDirection
+
+    websocket = AsyncMock()
+    websocket.application_state = websocket.client_state = WebSocketState.CONNECTED
+    session = CallSession("test", "", "", "")
+    session.transition(CallState.ACTIVE)
+    session.pending_end_request = True
+    session.safety_confirmation_state = SafetyConfirmationState.CONFIRMATION_PENDING
+    session.safety_confirmation_turn = 5
+    playback = SimpleNamespace(interrupt_and_wait=AsyncMock(), speak_and_wait=AsyncMock())
+    tools = CallControlTools(session=session, sessions=BrowserCallControl(websocket), tts=object(), playback=playback)
+    router = JevRouter(jev_settings(), client=FakeJevClient(classification("NEUTRAL")))
+    processor = AgentPolicyProcessor(SafetyEngine(), router, session, tools)
+    processor._completed_turns = 5
+    processor.push_frame = AsyncMock()
+    context = LLMContext(messages=[{"role": "user", "content": text}])
+    try:
+        await processor.process_frame(LLMContextFrame(context), FrameDirection.DOWNSTREAM)
+        await asyncio.sleep(0)
+        if should_end:
+            assert session.state == CallState.ENDED
+            websocket.close.assert_awaited_once()
+            playback.speak_and_wait.assert_awaited_once()
+            processor.push_frame.assert_not_awaited()
+        else:
+            assert session.state == CallState.ACTIVE
+            websocket.close.assert_not_awaited()
+            processor.push_frame.assert_awaited_once()
+    finally:
+        await router.close()
 
 
 @pytest.mark.asyncio

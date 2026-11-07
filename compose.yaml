@@ -34,9 +34,10 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
       POSTGRES_DATABASE: ${POSTGRES_DATABASE:-voice_support}
       QDRANT_URL: ${QDRANT_URL:-http://qdrant:6333}
+      TELEPHONY_ENABLED: ${TELEPHONY_ENABLED:-false}
       ASTERISK_ARI_URL: ${ASTERISK_ARI_URL:-http://asterisk:8088/ari}
       ASTERISK_ARI_USERNAME: ${ASTERISK_ARI_USERNAME:-voice_support}
-      ASTERISK_ARI_PASSWORD: ${ASTERISK_ARI_PASSWORD:?Set ASTERISK_ARI_PASSWORD in .env}
+      ASTERISK_ARI_PASSWORD: ${ASTERISK_ARI_PASSWORD:-}
       ASTERISK_ARI_APP: ${ASTERISK_ARI_APP:-voice-support}
       ASTERISK_AI_EXTENSION: ${ASTERISK_AI_EXTENSION:-7000}
       ASTERISK_MEDIA_WEBSOCKET_CLIENT: ${ASTERISK_MEDIA_WEBSOCKET_CLIENT:-voice_support_media}
@@ -83,8 +84,6 @@ services:
       postgresql:
         condition: service_healthy
       qdrant:
-        condition: service_healthy
-      asterisk:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/health/ready', timeout=3)"]
@@ -137,6 +136,7 @@ services:
       start_period: 10s
 
   asterisk:
+    profiles: ["telephony"]
     build:
       context: ./infrastructure/asterisk
     environment:
@@ -146,10 +146,10 @@ services:
       ASTERISK_LOCAL_NETWORK: ${ASTERISK_LOCAL_NETWORK:-192.168.1.0/24}
       ASTERISK_EXTERNAL_ADDRESS: ${ASTERISK_EXTERNAL_ADDRESS:-}
       ASTERISK_SIP_USERNAME: ${ASTERISK_SIP_USERNAME:-1001}
-      ASTERISK_SIP_PASSWORD: ${ASTERISK_SIP_PASSWORD:?Set ASTERISK_SIP_PASSWORD in .env}
+      ASTERISK_SIP_PASSWORD: ${ASTERISK_SIP_PASSWORD:-}
       ASTERISK_AI_EXTENSION: ${ASTERISK_AI_EXTENSION:-7000}
       ASTERISK_ARI_USERNAME: ${ASTERISK_ARI_USERNAME:-voice_support}
-      ASTERISK_ARI_PASSWORD: ${ASTERISK_ARI_PASSWORD:?Set ASTERISK_ARI_PASSWORD in .env}
+      ASTERISK_ARI_PASSWORD: ${ASTERISK_ARI_PASSWORD:-}
       ASTERISK_ARI_APP: ${ASTERISK_ARI_APP:-voice-support}
       ASTERISK_MEDIA_WEBSOCKET_CLIENT: ${ASTERISK_MEDIA_WEBSOCKET_CLIENT:-voice_support_media}
     ports:
